@@ -1,17 +1,17 @@
 const { processData } = require("./data-proc")
-const { get_model } = require("./model")
+const { getModel } = require("./model")
 
 async function train() {
     const data = await processData("./dataset/train.csv")
     const Xtrain = data[0]
     const ytrain = data[1]
 
-    const model = get_model()
+    const model = getModel()
 
     console.log("Training started....")
     await model.fit(Xtrain, ytrain, {
         batchSize: 24,
-        epochs: 20,
+        epochs: 1,
         validationSplit: 0.2,
         callbacks: {
             onEpochEnd: async (epoch, logs) => {
@@ -20,6 +20,9 @@ async function train() {
             }
         }
     });
+    
+    console.log("Saving model...")
+    await model.save("file://./sales_pred_model")
 
 }
 
