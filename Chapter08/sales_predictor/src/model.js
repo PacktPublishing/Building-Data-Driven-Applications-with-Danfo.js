@@ -3,12 +3,11 @@ const tf = dfd.tf
 
 const LEARNING_RATE = 0.01
 
-function get_model() {
+function getModel() {
     const model = tf.sequential();
-    model.add(tf.layers.dense({ inputShape: [10], units: 128, kernelInitializer: 'leCunNormal' }));
+    model.add(tf.layers.dense({ inputShape: [11], units: 128, kernelInitializer: 'leCunNormal' }));
     model.add(tf.layers.dense({ units: 64, activation: 'relu' }));
     model.add(tf.layers.dense({ units: 32, activation: 'relu' }));
-    model.add(tf.layers.dense({ units: 24, activation: 'relu' }));
     model.add(tf.layers.dense({ units: 1 }))
 
     model.compile({
@@ -17,7 +16,9 @@ function get_model() {
         metrics: ['mse']
     });
 
+    model.summary()
     return model
 }
 
-module.exports = { get_model }
+
+module.exports = { getModel }
