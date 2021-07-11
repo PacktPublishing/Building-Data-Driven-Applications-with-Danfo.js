@@ -3,9 +3,14 @@ import { DataFrame } from 'danfojs/src/core/frame'
 import { Pie as PieChart } from "react-chartjs-2";
 import { Bar as BarChart } from 'react-chartjs-2';
 
-export default function ValueCounts({ data, column, type }) {
+export default function ValueCounts({ data, column, username, type }) {
   const df = new DataFrame(data)
-  const countsSeries = df[column].value_counts()
+  const removeUserData = df.query({
+    column: "users",
+    is: "!=",
+    to: username
+  })
+  const countsSeries = removeUserData[column].value_counts()
   const labels = countsSeries.index
   const values = countsSeries.values
 

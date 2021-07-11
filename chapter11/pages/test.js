@@ -1,14 +1,22 @@
 import Head from 'next/head'
 import React, { useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-// import ValueCounts from '../components/ValueCounts'
+import Plot from '../components/Plot'
 
 const DynamicValueCounts = dynamic(
   () => import('../components/ValueCounts'),
   { ssr: false }
 )
+
+const Table = dynamic(
+  () => import('../components/Table'),
+  { ssr: false }
+)
 export default function Home() {
   let [data, setData] = useState()
+  let [user, setUser] = useState()
+  let [dataNlp, setDataNlp] = useState()
+
   let inputRef = useRef()
   const handleSubmit = async () => {
     const res = await fetch(
@@ -24,7 +32,24 @@ export default function Home() {
       }
     )
     const result = await res.json()
-    console.log(result)
+
+    const resSentiment = await fetch(
+      '/api/nlp',
+      {
+        body: JSON.stringify({
+          username: inputRef.current.value,
+          dfData: result
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      },
+
+    )
+    const sentData = await resSentiment.json()
+    setDataNlp(sentData)
+    setUser(inputRef.current.value)
     setData(result)
   }
   const handleKeyEvent = async (event) => {
@@ -55,58 +80,46 @@ export default function Home() {
 
         <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
           <div
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
+            className="p-6 mt-6 text-left border w-96 rounded-xl"
           >
-            <h3 className="text-2xl font-bold">Tweet source &rarr;</h3>
+            <h3 className="text-2xl font-bold">Tweet source</h3>
             <p className="mt-4 text-xl">
-              Display the device for all the tweet data.
+              Display the device for all the tweet user is mentioned in.
             </p>
             {typeof data != "undefined" && <DynamicValueCounts data={data} column={"source"} type={"PieChart"} />}
           </div>
 
-          <a
-            href="https://nextjs.org/learn"
+          <div
             className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
           >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
+            <h3 className="text-2xl font-bold">User Interactions</h3>
             <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
+              A chart of users that interact with the given twitter username.
             </p>
-          </a>
+            {typeof data != "undefined" && <DynamicValueCounts data={data} column={"users"} username={user} type={"BarChart"} />}
+          </div>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
+          <div
+            className="p-6 mt-6 text-left border w-96 rounded-xl"
           >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
+            <h3 className="text-2xl font-bold">Sentiment Analysis</h3>
             <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
+              A chart showing the overall sentiment percentage for all the tweet.
             </p>
-          </a>
+            {typeof data != "undefined" && <Plot data={dataNlp} />}
+          </div>
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
+          <div
+            className="p-6 mt-6 text-left border w-96 rounded-xl"
           >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
+            <h3 className="text-2xl font-bold">User Data</h3>
             <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
+              A table showing the extracted data for the given twitter username.
             </p>
-          </a>
+            {typeof data != "undefined" && <Table dfData={data} username={user} />}
+          </div>
         </div>
       </main>
-
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
     </div>
   )
 }
