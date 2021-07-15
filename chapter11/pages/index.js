@@ -2,6 +2,7 @@ import Head from 'next/head'
 import React, { useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Plot from '../components/Plot'
+import Search from '../components/Search'
 
 const DynamicValueCounts = dynamic(
   () => import('../components/ValueCounts'),
@@ -73,10 +74,7 @@ export default function Home() {
           </span>
         </h1>
 
-        <div className='border-2 flex justify-between p-2 rounded-md  md:p-4'>
-          <input id='searchInput' type='text' placeholder='Search twitter user' className='focus:outline-none' ref={inputRef} onKeyPress={handleKeyEvent} />
-          <button className='focus:outline-none' onClick={() => { handleSubmit() }}><img src="/search.svg" /></button>
-        </div>
+        <Search inputRef={inputRef} handleKeyEvent={handleKeyEvent} handleSubmit={handleSubmit} />
 
         <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
           <div
