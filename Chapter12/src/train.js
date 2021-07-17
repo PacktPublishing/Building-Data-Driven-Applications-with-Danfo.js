@@ -10,8 +10,6 @@ async function train({
     const {
         trainingData,
         targetData,
-        validationData,
-        validationTargetData,
         nUniqueBookId,
         nUniqueUserId
     } = await processData(dataPath)
@@ -22,7 +20,7 @@ async function train({
     await model.fit(trainingData, targetData, {
         batchSize,
         epochs,
-        validationData: [validationData, validationTargetData],
+        validationSplit: 0.1,
         callbacks: {
             onEpochEnd: async (epoch, logs) => {
                 const progressUpdate = `EPOCH (${epoch + 1}): Train MSE: ${Math.sqrt(logs.mse)}, Val MSE:  ${Math.sqrt(logs.val_mse)}\n`

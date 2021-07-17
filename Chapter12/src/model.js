@@ -7,7 +7,7 @@ function getModel({ nUniqueBookId, nUniqueUserId }) {
     const bookInput = tf.layers.input({ name: "bookInput", shape: [1] })
     const bookEmbedding = tf.layers.embedding({
         inputDim: nUniqueBookId + 1,
-        outputDim: 8,
+        outputDim: 32,
         name: "bookEmbedding"
     }).apply(bookInput)
     const bookOutput = tf.layers.flatten().apply(bookEmbedding)
@@ -15,7 +15,7 @@ function getModel({ nUniqueBookId, nUniqueUserId }) {
     const userInput = tf.layers.input({ name: "userInput", shape: [1] })
     const userEmbedding = tf.layers.embedding({
         inputDim: nUniqueUserId + 1,
-        outputDim: 8,
+        outputDim: 32,
         name: "userEmbedding"
     }).apply(userInput)
     const userOutput = tf.layers.flatten().apply(userEmbedding)
