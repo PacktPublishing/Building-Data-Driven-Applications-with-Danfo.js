@@ -30,7 +30,7 @@ function getModel({ nUniqueBookId, nUniqueUserId }) {
     const model = tf.model({ inputs: [bookInput, userInput], outputs: denseOut })
 
     model.compile({
-        optimizer: tf.train.adam(LEARNING_RATE),
+        optimizer: tf.train.sgd(LEARNING_RATE),
         loss: tf.losses.meanSquaredError,
         metrics: ['mse']
     });
