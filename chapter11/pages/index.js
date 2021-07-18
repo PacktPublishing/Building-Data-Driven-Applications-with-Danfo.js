@@ -104,7 +104,7 @@ export default function Home() {
             <p className="mt-4 text-xl">
               A chart showing the overall sentiment percentage for all the tweet.
             </p>
-            {typeof data != "undefined" && <Plot data={dataNlp} />}
+            {typeof dataNlp != "undefined" && <Plot data={dataNlp} />}
           </div>
 
           <div
