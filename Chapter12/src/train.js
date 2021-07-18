@@ -1,25 +1,22 @@
 const { processData } = require("./data_proc")
 const { getModel } = require("./model")
 
-async function train({
-    dataPath,
-    batchSize,
-    epochs,
-    modelSavePath,
-}) {
+
+async function train() {
     const {
         trainingData,
         targetData,
+        // nExtraFeatures,
         nUniqueBookId,
         nUniqueUserId
-    } = await processData(dataPath)
+    } = await processData()
 
     const model = getModel({ nUniqueBookId, nUniqueUserId })
 
     console.log("Training started....")
     await model.fit(trainingData, targetData, {
-        batchSize,
-        epochs,
+        batchSize: 128,
+        epochs: 5,
         validationSplit: 0.1,
         callbacks: {
             onEpochEnd: async (epoch, logs) => {
@@ -30,8 +27,8 @@ async function train({
     });
 
     console.log("Saving model...")
-    await model.save(`file://${modelSavePath}`)
+    await model.save(`file://book_recommendation_model`)
 
 }
 
-module.exports = { train }
+train()
