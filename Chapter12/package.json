@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
+    "retrain": "node ./src/train.js",
+    "recommend": "node ./src/recommend.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

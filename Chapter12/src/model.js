@@ -1,74 +1,40 @@
 const dfd = require("danfojs-node")
 const tf = dfd.tf
 
-const LEARNING_RATE = 0.001
+const LEARNING_RATE = 0.01
 
-// function getModel() {
-//     const model = tf.sequential();
-//     model.add(tf.layers.dense({ inputShape: [18], units: 128, kernelInitializer: 'leCunNormal' }));
-//     model.add(tf.layers.dense({ units: 64, activation: 'relu' }));
-//     model.add(tf.layers.dense({ units: 32, activation: 'relu' }));
-//     model.add(tf.layers.dense({ units: 1 }))
-
-//     model.compile({
-//         optimizer: tf.train.adam(LEARNING_RATE),
-//         loss: tf.losses.meanSquaredError,
-//         metrics: ['mse']
-//     });
-
-//     return model
-// }
-
-function getModel({ nExtraFeatures, nUniqueBookId, nUniqueUserId }) {
-    const bookInput = tf.layers.input({ name: "bookInput", shape: [1] })
-    const bookEmbedding = tf.layers.embedding({
-        inputDim: nUniqueBookId + 1,
-        outputDim: 32,
-        name: "bookEmbedding"
-    }).apply(bookInput)
-    const bookOutput = tf.layers.flatten().apply(bookEmbedding)
+function getModel({ nItem, nUser }) {
+    const itemInput = tf.layers.input({ name: "itemInput", shape: [1] })
+    const itemEmbedding = tf.layers.embedding({
+        inputDim: nItem + 1,
+        outputDim: 16,
+        name: "itemEmbedding",
+        embeddingsInitializer: "leCunUniform",
+    }).apply(itemInput)
 
     const userInput = tf.layers.input({ name: "userInput", shape: [1] })
     const userEmbedding = tf.layers.embedding({
-        inputDim: nUniqueUserId + 1,
-        outputDim: 32,
-        name: "userEmbedding"
+        inputDim: nUser + 1,
+        outputDim: 16,
+        name: "userEmbedding",
+        embeddingsInitializer: "leCunUniform",
     }).apply(userInput)
-    const userOutput = tf.layers.flatten().apply(userEmbedding)
 
+    //Dot product of the two output layers
+    const mergedOutput = tf.layers.dot({ axes: 0}).apply([itemEmbedding, userEmbedding])
+    const flatten = tf.layers.flatten().apply(mergedOutput)
+    const denseOut = tf.layers.dense({ units: 1, activation: "sigmoid", kernelInitializer: "leCunUniform" }).apply(flatten)
 
-    const extraFeatsInput = tf.layers.input({ name: "ExtraInput", shape: [18] })
-    const denseExtra0 = tf.layers.dense({ units: 128, activation: "relu" }).apply(extraFeatsInput)
-    const denseExtra1 = tf.layers.dense({ units: 64, activation: "relu" }).apply(denseExtra0)
-
-    const mergedOutput = tf.layers.concatenate().apply([bookOutput, userOutput, denseExtra1])
-
-    // const extraFeatsEmbedding = tf.layers.embedding({
-    //     inputDim: nExtraFeatures,
-    //     outputDim: 64,
-    //     name: "extraEmbedding"
-    // }).apply(extraFeatsInput)
-    // const extraFeatsOutput = tf.layers.flatten().apply(extraFeatsEmbedding)
-
-
-    //concatenate the three output layers
-    //pass to some dense layers
-    const dense1 = tf.layers.dense({ units: 128, activation: "relu" }).apply(mergedOutput)
-    const dense2 = tf.layers.dense({ units: 64, activation: "relu" }).apply(dense1)
-    const dense3 = tf.layers.dense({ units: 32, activation: "relu" }).apply(dense2)
-    const denseOut = tf.layers.dense({ units: 1, activation: "sigmoid" }).apply(dense3)
-
-    const model = tf.model({ inputs: [extraFeatsInput, bookInput, userInput], outputs: denseOut })
+    const model = tf.model({ inputs: [itemInput, userInput], outputs: denseOut })
 
     model.compile({
-        optimizer: tf.train.sgd(LEARNING_RATE),
-        loss: tf.losses.meanSquaredError,
-        metrics: ['mse']
+        optimizer: tf.train.adam(LEARNING_RATE),
+        loss: tf.losses.meanSquaredError
     });
 
     model.summary()
     return model
 }
+// getModel({ nItem: 20, nUser: 10 })
 
-// getModel({ nExtraFeatures: 200, nUniqueBookId: 20, nUniqueUserId: 10 })
 module.exports = { getModel }
