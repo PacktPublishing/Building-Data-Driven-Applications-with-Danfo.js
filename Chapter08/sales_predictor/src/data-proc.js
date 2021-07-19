@@ -2,10 +2,10 @@ const dfd = require("danfojs-node")
 
 async function processData(trainDataPath) {
     const salesDf = await dfd.read_csv(trainDataPath)
-    // salesDf.head().print()
+    salesDf.head().print()
 
-    //Check and fill missing columns
-    // salesDf.isna().sum().print()
+    // Check and fill missing columns
+    salesDf.isna().sum().print()
     salesDf.fillna({
         columns: ["Item_Weight", "Outlet_Size"],
         values: [salesDf['Item_Weight'].mean(), "Medium"],
@@ -32,7 +32,10 @@ async function processData(trainDataPath) {
     scaler.fit(Xtrain)
     Xtrain = scaler.transform(Xtrain)
 
+    Xtrain.tensor.print()
+    ytrain.tensor.print()
     return [Xtrain.tensor, ytrain.tensor]
 }
+
 
 module.exports = { processData }
