@@ -1,5 +1,10 @@
-###  Simple Recommender System using Neural Network Embeddings
+# Simple Twitter DashBoard
 
-Training data source: https://grouplens.org/datasets/movielens/100k/
+This dashboard contains basice tweet analytics of a given twitter username. The main purpose of the app is to show how to build an analytic app using Danfojs at the frontend and also at the Backend.
 
-Data Description: https://files.grouplens.org/datasets/movielens/ml-100k-README.txt
+The app is built using Nextjs with Tailwind Css integration.
+
+![Analyticapp](twiter_dash.png)
+
+
+
