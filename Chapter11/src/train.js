@@ -14,8 +14,8 @@ async function train() {
 
     console.log("Training started....")
     await model.fit(trainingData, targetData, {
-        batchSize: 1000,
-        epochs: 1,
+        batchSize: 128,
+        epochs: 5,
         validationSplit: 0.1,
         callbacks: {
             onEpochEnd: async (epoch, logs) => {
