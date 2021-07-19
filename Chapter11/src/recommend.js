@@ -17,7 +17,7 @@ async function recommend(userId, top = 10) {
     const ratings = model.predict([uniqueMoviesIdTensor, userToRecommendForTensor])
 
     const recommendationDf = new dfd.DataFrame({
-        item_id: uniqueMoviesId,
+        movie_id: uniqueMoviesId,
         ratings: ratings.arraySync()
     })
 
@@ -28,7 +28,7 @@ async function recommend(userId, top = 10) {
         })
         .head(top)
 
-    const movieDetailsDF = await getMovieDetails(topRecommendationsDF["item_id"].values)
+    const movieDetailsDF = await getMovieDetails(topRecommendationsDF["movie_id"].values)
     console.log(movieDetailsDF["movie title"].values);
 
 }

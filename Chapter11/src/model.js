@@ -5,6 +5,8 @@ const LEARNING_RATE = 0.01
 
 function getModel({ nItem, nUser }) {
     const itemInput = tf.layers.input({ name: "itemInput", shape: [1] })
+    const userInput = tf.layers.input({ name: "userInput", shape: [1] })
+
     const itemEmbedding = tf.layers.embedding({
         inputDim: nItem + 1,
         outputDim: 16,
@@ -12,7 +14,6 @@ function getModel({ nItem, nUser }) {
         embeddingsInitializer: "leCunUniform",
     }).apply(itemInput)
 
-    const userInput = tf.layers.input({ name: "userInput", shape: [1] })
     const userEmbedding = tf.layers.embedding({
         inputDim: nUser + 1,
         outputDim: 16,
