@@ -13,6 +13,9 @@
 <body>
 
     <script>
+        tf.ready().then(()=>{
+            console.log("Tensorflow.js loaded successfully!");
+        })
         // Create some simple tensors
         // const x = tf.tensor2d([1, 2, 3, 4], [2, 2]);
         // const y = tf.tensor2d([1, 3, 5, 7], [2, 2]);

@@ -26,7 +26,7 @@ async function train() {
     });
 
     console.log("Saving model...")
-    await model.save(`file://${path.join(__dirname, "book_recommendation_model")}`)
+    await model.save(`file://${path.join(__dirname, "movie_recommendation_model")}`)
 
 }
 

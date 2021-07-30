@@ -34,7 +34,7 @@ async function recommend(userId, top = 10) {
 }
 
 async function loadModel() {
-    const model = await tf.loadLayersModel(`file://${path.join(__dirname, "book_recommendation_model", "model.json")}`);
+    const model = await tf.loadLayersModel(`file://${path.join(__dirname, "movie_recommendation_model", "model.json")}`);
     return model
 }
 
