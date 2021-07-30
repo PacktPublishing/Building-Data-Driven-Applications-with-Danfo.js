@@ -1,0 +1,17 @@
+{
+    "name": "recommender-sys",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "retrain": "node ./src/train.js",
+      "recommend": "node ./src/recommend.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "danfojs-node": "^0.2.7"
+    }
+  }
+  
