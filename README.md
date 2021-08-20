@@ -1,6 +1,6 @@
 # Building Data-Driven Applications with Danfo.js
 
-<a href="https://www.packtpub.com/product/building-data-driven-applications-with-danfo-js/9781801070850"><img src="Cover Image URL of the Book" alt="Building Data-Driven Applications with Danfo.js" height="256px" align="right"></a>
+<a href="https://www.packtpub.com/product/building-data-driven-applications-with-danfo-js/9781801070850"><img src="https://static.packt-cdn.com/products/9781801070850/cover/smaller" alt="Building Data-Driven Applications with Danfo.js" height="256px" align="right"></a>
 
 This is the code repository for [Building Data-Driven Applications with Danfo.js](Packt UTM URL of the Book), published by Packt.
 
