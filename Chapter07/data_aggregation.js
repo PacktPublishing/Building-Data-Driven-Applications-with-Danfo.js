@@ -1,4 +1,5 @@
 const dfd = require("danfojs-node")
+
 let data = {
   'A': ['foo', 'bar', 'foo', 'bar',
 
@@ -9,7 +10,7 @@ let data = {
   'D': [3, 2, 4, 1, 5, 6, 7, 8]
 };
 
-let df = new DataFrame(data);
+let df = new dfd.DataFrame(data);
 let group_df = df.groupby(["A"]);
 group_df.agg({ C: "mean", D: "count" }).print();
 
@@ -29,6 +30,6 @@ data = {
   'D': [3, 2, 4, 1, 5, 6, 7, 8]
 };
 
-df = new DataFrame(data);
+df = new dfd.DataFrame(data);
 group_df = df.groupby(["A", "B"]);
 group_df.agg({ C: "mean", D: "count" }).print(); 

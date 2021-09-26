@@ -14,7 +14,7 @@ async function recommend(userId, top = 10) {
     const userToRecommendForTensor = tf.fill([uniqueMoviesIdTensor.shape[0]], userId)
 
     const model = await loadModel()
-    const ratings = model.predict([uniqueMoviesIdTensor, userToRecommendForTensor])
+    const ratings = (model.predict([uniqueMoviesIdTensor, userToRecommendForTensor])).flatten()
 
     const recommendationDf = new dfd.DataFrame({
         movie_id: uniqueMoviesId,
@@ -41,7 +41,7 @@ async function loadModel() {
 async function getMovieDetails(movieIds) {
     const movieDF = await dfd.read_csv(movieDetailsDataPath)
     const movie = movieDF
-        .set_index({ key: "movie id" })
+        .set_index({ column: "movie id" })
         .loc({ rows: movieIds, columns: [`movie title`, `release date`,] })
         .reset_index()
     return movie

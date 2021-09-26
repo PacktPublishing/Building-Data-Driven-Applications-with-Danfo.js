@@ -5,7 +5,7 @@ let data = {
 
     'foo', 'bar', 'foo', 'foo'],
 
-  ' B': ['one', 'one', 'two', 'three',
+  'B': ['one', 'one', 'two', 'three',
 
     'two', 'two', 'one', 'three'],
 
@@ -15,20 +15,20 @@ let data = {
 };
 
 let df = new dfd.DataFrame(data);
-let group_df = df.groupby(["A"]);
-console.log(group_df.data_tensors) // print data_tensors
+let group_df1 = df.groupby(["A"]);
+console.log(group_df1.data_tensors) // print data_tensors
 
 
-let grouped_data = group_df.data_tensors;
+let grouped_data1 = group_df1.data_tensors;
 
-for (let key in grouped_data) {
+for (let key in grouped_data1) {
 
-  grouped_data[key].print();
+  grouped_data1[key].print();
 
 }
 
-let group_df = df.groupby(["A", "B"]);
-let grouped_data = group_df.data_tensors;
+let group_df2 = df.groupby(["A", "B"]);
+let grouped_data = group_df2.data_tensors;
 
 for (let key in grouped_data) {
   let key_data = grouped_data[key];
@@ -38,13 +38,13 @@ for (let key in grouped_data) {
 }
 
 // Using get_groups
-let group_df = df.groupby(["A"]);
-group_df.get_groups(["foo"]).print()  // get grouped data for key foo
-group_df.get_groups(["bar"]).print()  // get grouped data for key bar
+let group_df3 = df.groupby(["A"]);
+group_df3.get_groups(["foo"]).print()  // get grouped data for key foo
+group_df3.get_groups(["bar"]).print()  // get grouped data for key bar
 
-let group_df = df.groupby(["A", "B"]);  // grouped by double column
-group_df.get_groups(["foo", "one"]).print() // obtain grouped data base on key combination from columnA and B
-group_df.get_groups(["bar", "two"]).print()
+let group_df4 = df.groupby(["A", "B"]);  // grouped by double column
+group_df4.get_groups(["foo", "one"]).print() // obtain grouped data base on key combination from columnA and B
+group_df4.get_groups(["bar", "two"]).print()
 
 
 

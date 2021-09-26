@@ -2,7 +2,7 @@ const { processData } = require("./data-proc")
 const { getModel } = require("./model")
 
 async function train() {
-    const data = await processData("./dataset/train.csv")
+    const data = await processData()
     const Xtrain = data[0]
     const ytrain = data[1]
 

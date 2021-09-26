@@ -1,7 +1,9 @@
 const dfd = require("danfojs-node")
+const path = require("path")
 
-async function processData(trainDataPath) {
-    const salesDf = await dfd.read_csv(trainDataPath)
+async function processData() {
+    const dataPath = path.join(__dirname, "dataset", "Train.csv")
+    const salesDf = await dfd.read_csv(dataPath)
     salesDf.head().print()
 
     // Check and fill missing columns
@@ -14,11 +16,11 @@ async function processData(trainDataPath) {
 
     //label encode categorical feature
     let encoder = new dfd.LabelEncoder()
-    let catCols = salesDf.select_dtypes(includes = ['string']).column_names // get all categorical column names
+    let catCols = salesDf.select_dtypes(includes = ['string']).columns // get all categorical column names
     catCols.forEach(col => {
         encoder.fit(salesDf[col])
         enc_val = encoder.transform(salesDf[col])
-        salesDf.addColumn({ column: col, value: enc_val })
+        salesDf.addColumn({ column: col, values: enc_val })
     })
 
     //split data into train and target values
@@ -36,6 +38,5 @@ async function processData(trainDataPath) {
     ytrain.tensor.print()
     return [Xtrain.tensor, ytrain.tensor]
 }
-
 
 module.exports = { processData }

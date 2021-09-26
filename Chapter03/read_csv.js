@@ -1,7 +1,9 @@
 const dfd = require("danfojs-node")
+const path = require("path")
 
+const file_path = path.join(__dirname, "data", "titanic.csv")
 // read local csv file
-dfd.read_csv('data/titanic.csv').then(df => {
+dfd.read_csv(file_path).then(df => {
 
   df.head().print()
 

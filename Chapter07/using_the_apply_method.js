@@ -33,7 +33,7 @@ data = {
   'D': [3, 2, 4, 1, 5, 6, 7, 8]
 };
 
-df = new DataFrame(data);
+df = new dfd.DataFrame(data);
 group_df = df.groupby(["A", "B"]);
 
 let subMin = (x) => {
@@ -62,7 +62,7 @@ data = {
   'D': [3, 2, 4, 1, 5, 6, 7, 8]
 };
 
-df = new DataFrame(data);
+df = new dfd.DataFrame(data);
 group_df = df.groupby(["A"]);
 
 // (x - x.mean()) / x.std() 

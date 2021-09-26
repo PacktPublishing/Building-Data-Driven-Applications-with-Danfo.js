@@ -1,6 +1,6 @@
 const dfd = require("danfojs-node")
 // single Column Grouping
-let data = {
+let data1 = {
       'A': ['foo', 'bar', 'foo', 'bar',
 
             'foo', 'bar', 'foo', 'foo'],
@@ -10,18 +10,18 @@ let data = {
       'D': [3, 2, 4, 1, 5, 6, 7, 8]
 };
 
-let df = new dfd.DataFrame(data);
+let df1 = new dfd.DataFrame(data1);
 
-let group_df = df.groupby(["A"]); // grouped by column A
-group_df.mean().print()
-
-
-let col_c = group_df.col(['C']) // Obtain column C
-col_c.sum().print()
+let group_df1 = df1.groupby(["A"]); // grouped by column A
+group_df1.mean().print()
 
 
-let col_d = group_df.col(['D']) // Obtain column D
-col_d.count().print()
+let col_c1 = group_df1.col(['C']) // Obtain column C
+col_c1.sum().print()
+
+
+let col_d1 = group_df1.col(['D']) // Obtain column D
+col_d1.count().print()
 
 
 // Double column Grouping
@@ -30,7 +30,7 @@ let data = {
 
             'foo', 'bar', 'foo', 'foo'],
 
-      ' B': ['one', 'one', 'two', 'three',
+      'B': ['one', 'one', 'two', 'three',
 
             'two', 'two', 'one', 'three'],
 
