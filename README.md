@@ -1,3 +1,15 @@
+
+### Get this product for $5
+
+<i>Packt is having its biggest sale of the year. Get this eBook or any other book, video, or course that you like just for $5 each</i>
+
+
+<b><p align='center'>[Buy now](https://packt.link/9781801070850)</p></b>
+
+
+<b><p align='center'>[Buy similar titles for just $5](https://subscription.packtpub.com/search)</p></b>
+
+
 # Building Data-Driven Applications with Danfo.js
 
 <a href="https://www.packtpub.com/product/building-data-driven-applications-with-danfo-js/9781801070850"><img src="https://static.packt-cdn.com/products/9781801070850/cover/smaller" alt="Building Data-Driven Applications with Danfo.js" height="256px" align="right"></a>
