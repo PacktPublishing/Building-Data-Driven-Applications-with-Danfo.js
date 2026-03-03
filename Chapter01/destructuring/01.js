@@ -19,4 +19,4 @@ let data3 = {
     year: 2019
 }
 
-let { age2, firstName2, lastName2, year2 } = data3
+let { age: age2, firstName: firstName2, lastName: lastName2, year: year2 } = data3
